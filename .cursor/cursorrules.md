@@ -36,7 +36,7 @@ User searches city
 
 | File | Role |
 |---|---|
-| `app/page.tsx` | Client Component — owns all weather state (city, data, loading, error, unit) |
+| `app/page.tsx` | Client Component — owns all weather state (city, data, loading, error, unit — **`unit` defaults to `'F'`**) |
 | `app/api/weather/route.ts` | Server-side API route — fetches OWM, keeps API key hidden |
 | `lib/types/weather.ts` | All TypeScript types for weather data |
 | `lib/weather.ts` | `fetchWeather()`, `celsiusToFahrenheit()`, `formatTemp()`, `formatDate()`, `formatTime()` |
@@ -46,7 +46,7 @@ User searches city
 | `components/HourlyForecast.tsx` | Horizontal scroll strip — next 8 × 3-hour slots |
 | `components/DailyForecast.tsx` | 7-day forecast list |
 | `components/ThemeToggle.tsx` | Client Component — dark/light toggle |
-| `components/UnitToggle.tsx` | Client Component — °F / °C toggle |
+| `components/UnitToggle.tsx` | Client Component — °F / °C toggle (**default °F**) |
 | `components/WeatherSkeleton.tsx` | Loading placeholder |
 | `components/ErrorMessage.tsx` | Error state display |
 
@@ -73,7 +73,7 @@ This is the most visually distinctive feature of the app. Read `prd.md` → **An
 - Endpoints used:
   - Current: `https://api.openweathermap.org/data/2.5/weather?q={city}&appid={key}&units=metric`
   - Forecast: `https://api.openweathermap.org/data/2.5/forecast?q={city}&appid={key}&units=metric`
-- All temperatures stored and returned in **Celsius**. Fahrenheit conversion is client-side only via `formatTemp(value, unit)`.
+- All temperatures stored and returned in **Celsius**. Fahrenheit conversion is client-side only via `formatTemp(value, unit)`. **Default displayed unit is °F** — initialize page `unit` state as `'F'` unless/until the user switches (optional later: persist preference).
 - OWM forecast returns 40 × 3-hour slots. Slice the first 8 for hourly; group by calendar day for daily (take noon slot or first slot per day).
 - OWM icons: `https://openweathermap.org/img/wn/{icon}@2x.png` — add this domain to `next.config.ts` image remotePatterns.
 
@@ -85,7 +85,7 @@ This is the most visually distinctive feature of the app. Read `prd.md` → **An
 - Keep changes **minimal and scoped** to the current task. Avoid unrelated refactors.
 - Use **Server Components** unless a Client Component is explicitly required (search input, toggles, page-level state, background animation).
 - Mark Client Components with `'use client'` at the top. Do not add it unless necessary.
-- All temperature values in JSX must go through `formatTemp(value, unit)` — never raw numbers.
+- All temperature values in JSX must go through `formatTemp(value, unit)` — never raw numbers. Use **`unit` default `'F'`** for first paint.
 - Handle all three states for weather data: **loading** (skeleton), **error** (ErrorMessage), **success** (weather components).
 - **All text and UI must maintain WCAG AA contrast over the animated background in every condition state.** Use `bg-black/20` or `bg-white/10` overlays behind text if needed.
 

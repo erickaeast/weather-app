@@ -16,6 +16,11 @@ bun dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+### Weather app configuration
+
+- Add an OpenWeatherMap API key to `.env.local` as `OWM_API_KEY` (see `docs/prd.md`). The key is server-only; do not commit it.
+- The API returns metric (Celsius) data; the **default temperature display in the UI is Fahrenheit (°F)**, with a client-side toggle to Celsius — see `docs/prd.md` and `docs/tasks.md`.
+
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 
 This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.

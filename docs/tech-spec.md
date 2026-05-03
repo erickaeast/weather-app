@@ -31,8 +31,15 @@ Other package managers: `pnpm dev`, `yarn dev`, `bun dev` as supported by your e
 
 ## Environment
 
-- _List required `NEXT_PUBLIC_*` and server-only variables once defined._
-- Do not commit secrets; use `.env.local` (gitignored by default in Next.js templates).
+- Server-only: `OWM_API_KEY` in `.env.local` (see `docs/prd.md`). Do not commit secrets.
+- _Additional `NEXT_PUBLIC_*` variables: none required yet._
+
+## Temperature units
+
+- **API & persisted JSON:** Celsius (`units=metric` from OpenWeatherMap; normalized types store °C).
+- **UI default:** Fahrenheit (**°F**) on first load; users switch to Celsius via the unit toggle without refetching.
+
+Do not commit `.env.local` (gitignored by default in Next.js templates).
 
 ## Conventions
 

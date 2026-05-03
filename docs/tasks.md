@@ -8,26 +8,26 @@ Cursor should follow tasks sequentially. Always refer to `prd.md` before impleme
 ## Phase 1 — Foundation
 
 - [ ] Confirm Next.js + Tailwind v4 dev server runs cleanly (`npm run dev`)
-- [ ] Add `OWM_API_KEY` to `.env.local` (OpenWeatherMap free tier key)
-- [ ] Add OpenWeatherMap icon domain to `next.config.ts` image remotePatterns:
+- [x] Add `OWM_API_KEY` to `.env.local` (OpenWeatherMap free tier key)
+- [x] Add OpenWeatherMap icon domain to `next.config.ts` image remotePatterns:
   ```ts
   { protocol: 'https', hostname: 'openweathermap.org' }
   ```
-- [ ] Create `/api/weather/route.ts` — accepts `?city=` query param, fetches current weather + 5-day forecast from OWM, returns combined JSON. Keep API key server-side only.
-- [ ] Define TypeScript types in `lib/types/weather.ts`:
+- [x] Create `/api/weather/route.ts` — accepts `?city=` query param, fetches current weather + 5-day forecast from OWM, returns combined JSON. Keep API key server-side only.
+- [x] Define TypeScript types in `lib/types/weather.ts`:
   - `WeatherCurrent` — temp, feels_like, humidity, wind_speed, description, icon, city, country
   - `HourlyItem` — time, temp, icon, description
   - `DailyItem` — date, temp_min, temp_max, icon, description
   - `WeatherData` — `{ current: WeatherCurrent, hourly: HourlyItem[], daily: DailyItem[] }`
-- [ ] Create `lib/weather.ts` — helper functions:
+- [x] Create `lib/weather.ts` — helper functions:
   - `fetchWeather(city: string): Promise<WeatherData>` — calls `/api/weather`
   - `celsiusToFahrenheit(c: number): number`
   - `formatDate(timestamp: number): string`
   - `formatTime(timestamp: number): string`
-- [ ] Define global layout in `app/layout.tsx`:
+- [x] Define global layout in `app/layout.tsx`:
   - Dark mode class strategy: `class="dark"` on `<html>` controlled by client component
   - Import global styles, set font, define metadata (title: "Weather App")
-- [ ] Establish base page structure in `app/page.tsx` — placeholder content only, confirms layout renders
+- [x] Establish base page structure in `app/page.tsx` — placeholder content only, confirms layout renders
 
 ---
 
@@ -68,7 +68,7 @@ Cursor should follow tasks sequentially. Always refer to `prd.md` before impleme
   - Reads system preference on mount via `prefers-color-scheme`
   - Persists preference to `localStorage`
 - [ ] `components/UnitToggle.tsx` (Client Component)
-  - Simple °F / °C switch
+  - Simple °F / °C switch — **initial / default selection is °F**
   - Lifted state — lives in page-level context or prop-drilled from `app/page.tsx`
 - [ ] `components/WeatherSkeleton.tsx`
   - Skeleton placeholder matching the layout of current + hourly + daily sections
@@ -82,14 +82,14 @@ Cursor should follow tasks sequentially. Always refer to `prd.md` before impleme
 ## Phase 3 — Feature Assembly & Data Wiring
 
 - [ ] Wire `app/page.tsx` as a Client Component:
-  - State: `city`, `weatherData`, `isLoading`, `error`, `unit`
+  - State: `city`, `weatherData`, `isLoading`, `error`, `unit` — **`unit` defaults to `'F'`** (Fahrenheit first paint)
   - On search: call `fetchWeather(city)`, update state
   - Pass `conditionId`, `isDay`, and `theme` to `WeatherBackground` — update on every new weather fetch
   - Render: `WeatherBackground` (fixed, z-0) → content layer (relative, z-10) → `SearchBar` → conditional `WeatherSkeleton` / `ErrorMessage` / weather components
 - [ ] Derive `isDay` from OWM `sys.sunrise` and `sys.sunset` timestamps in API response — pass to background
 - [ ] Implement background transition on new city search: cross-fade between old and new condition state (CSS opacity transition on background layer)
 - [ ] Background default/loading state: slow neutral gradient drift (muted blue-grey) while data is fetching
-- [ ] Implement unit conversion: all temps rendered through a `formatTemp(value, unit)` util — no raw numbers in JSX
+- [ ] Implement unit conversion: all temps rendered through a `formatTemp(value, unit)` util — no raw numbers in JSX (default `unit` is `'F'`)
 - [ ] Handle edge cases:
   - Empty search (no API call, optional inline hint)
   - API rate limit / network error (show `ErrorMessage` with retry prompt)
@@ -155,7 +155,7 @@ Cursor should follow tasks sequentially. Always refer to `prd.md` before impleme
 
 - Always refer to `prd.md` before implementing features
 - Refer to `prd.md` → **Animated Background Spec** for the full condition → animation + color palette mapping before building `WeatherBackground.tsx`
-- Temperatures are stored and fetched in **Celsius**; Fahrenheit is a client-side conversion only
+- Temperatures are stored and fetched in **Celsius**; Fahrenheit is a client-side conversion only — **default displayed unit is °F** (`unit` initial state `'F'`)
 - The OWM free tier 5-day/3-hour forecast gives 40 data points — slice to 8 for hourly, group by day for daily
 - `isDay` is derived from `sys.sunrise` and `sys.sunset` in the OWM current weather response — always pass this to `WeatherBackground`
 - Keep changes minimal and focused per task

@@ -40,7 +40,7 @@ Both personas expect the app to feel polished, load fast, and respect their OS t
 - **Immersive animated background** — full-screen, condition-driven environment that updates in real time based on current weather (see Animated Background Spec below)
 - Light and dark mode — auto-detect from system, with manual toggle; background animations adapt to theme
 - Responsive layout (mobile-first, scales gracefully to desktop)
-- Unit toggle: Fahrenheit / Celsius
+- Unit toggle: Fahrenheit / Celsius — **default display is Fahrenheit (°F)** until the user chooses Celsius.
 - Loading and error states (city not found, API failure)
 - Location displayed as "City, Country Code"
 
@@ -75,6 +75,7 @@ Both personas expect the app to feel polished, load fast, and respect their OS t
 - Background animations adapt to theme (e.g., sunny day = bright sky in light mode, deep blue dusk in dark mode).
 
 **Unit toggle**
+- On first visit the UI shows temperatures in **Fahrenheit (°F)** by default.
 - A toggle (°F / °C) switches all temperature values without a new API call (convert client-side).
 
 **Error state**
@@ -122,7 +123,7 @@ OWM_API_KEY=your_openweathermap_api_key
 | Current weather | `GET /data/2.5/weather?q={city}&appid={key}&units=metric` |
 | 5-day / 3-hour forecast | `GET /data/2.5/forecast?q={city}&appid={key}&units=metric` |
 
-Temperatures stored in Celsius internally; Fahrenheit conversion done client-side.
+Temperatures from the API are stored in **Celsius** (metric); the client converts for display. **Default display unit is Fahrenheit (°F)**; Celsius is opt-in via the unit toggle.
 
 ---
 

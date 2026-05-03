@@ -20,7 +20,8 @@ High-level structure of **starter-nextjs-cursor-template**. Adjust as features a
 
 ## Data & external services
 
-- _Document APIs, databases, auth providers, and caches as they are introduced._
+- **OpenWeatherMap** — `/api/weather` route proxies requests with `OWM_API_KEY`; responses normalize to °C internally.
+- **Display:** Temperatures default to **Fahrenheit (°F)** in the UI; switching to Celsius is client-side only (see `docs/prd.md`).
 
 ## Deployment
 
