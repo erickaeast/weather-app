@@ -114,3 +114,17 @@ body {
 .wx-sun-glow {
   animation: wx-sun-pulse 8s ease-in-out infinite;
 }
+
+@keyframes wx-loading-drift {
+  0% {
+    background-position: 0% 40%;
+  }
+  100% {
+    background-position: 100% 55%;
+  }
+}
+
+.wx-loading-drift {
+  background-size: 220% 220%;
+  animation: wx-loading-drift 22s ease-in-out infinite alternate;
+}

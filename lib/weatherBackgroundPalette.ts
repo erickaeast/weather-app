@@ -97,3 +97,10 @@ export function rainIntensityCap(group: WeatherConditionGroup): number {
   if (group === "drizzle") return 80;
   return 150;
 }
+
+/** Neutral muted gradient while fetching (see Phase 3 loading state). */
+export function getLoadingGradient(theme: "light" | "dark"): string {
+  return theme === "dark"
+    ? "linear-gradient(125deg, #1e293b 0%, #334155 45%, #0f172a 100%)"
+    : "linear-gradient(125deg, #94a3b8 0%, #cbd5e1 45%, #94a3b8 100%)";
+}

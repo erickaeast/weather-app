@@ -28,7 +28,7 @@ export function ThemeToggle() {
   if (dark === null) {
     return (
       <div
-        className="h-9 w-9 shrink-0 rounded-full border border-white/20 bg-black/20 backdrop-blur-md"
+        className="h-9 min-w-[6.5rem] shrink-0 rounded-full border border-white/20 bg-black/20 backdrop-blur-md"
         aria-hidden
       />
     );
@@ -38,10 +38,13 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="flex h-9 w-9 shrink-0 items-center justify-center rounded-full border border-white/20 bg-black/25 text-lg shadow backdrop-blur-md transition-colors hover:bg-black/35 dark:border-white/15 dark:bg-black/40 dark:hover:bg-black/55"
+      className="flex h-9 shrink-0 items-center gap-2 rounded-full border border-white/20 bg-black/25 px-3 py-1.5 text-sm font-medium shadow backdrop-blur-md transition-colors hover:bg-black/35 dark:border-white/15 dark:bg-black/40 dark:hover:bg-black/55"
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
     >
-      {dark ? "☀️" : "🌙"}
+      <span className="text-base leading-none" aria-hidden>
+        {dark ? "☀️" : "🌙"}
+      </span>
+      <span className="text-white/95">{dark ? "light" : "dark"}</span>
     </button>
   );
 }

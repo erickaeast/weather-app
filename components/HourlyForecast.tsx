@@ -16,9 +16,7 @@ export function HourlyForecast({ items, unit }: HourlyForecastProps) {
       >
         Hourly
       </h2>
-      <div className="relative -mx-1">
-        <div className="pointer-events-none absolute inset-y-0 left-0 z-10 w-8 bg-gradient-to-r from-black/25 to-transparent dark:from-black/40" />
-        <div className="pointer-events-none absolute inset-y-0 right-0 z-10 w-8 bg-gradient-to-l from-black/25 to-transparent dark:from-black/40" />
+      <div className="-mx-1">
         <ul className="flex gap-3 overflow-x-auto pb-2 pt-1 scrollbar-none">
           {items.slice(0, 8).map((item) => (
             <li
