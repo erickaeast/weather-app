@@ -24,3 +24,93 @@ body {
   color: var(--foreground);
   font-family: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
 }
+
+/* Horizontal strips: hide scrollbar but keep scroll (see HourlyForecast). */
+.scrollbar-none {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+
+@keyframes wx-bg-enter {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.wx-bg-enter {
+  animation: wx-bg-enter 0.8s ease-out forwards;
+}
+
+@keyframes wx-cloud-a {
+  0%,
+  100% {
+    transform: translateX(-6vw) translateY(0);
+  }
+  50% {
+    transform: translateX(8vw) translateY(-2vh);
+  }
+}
+
+@keyframes wx-cloud-b {
+  0%,
+  100% {
+    transform: translateX(5vw) translateY(0);
+  }
+  50% {
+    transform: translateX(-10vw) translateY(3vh);
+  }
+}
+
+@keyframes wx-fog {
+  0%,
+  100% {
+    transform: translateX(-4%);
+  }
+  50% {
+    transform: translateX(4%);
+  }
+}
+
+@keyframes wx-twinkle {
+  0%,
+  100% {
+    opacity: 0.35;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+.wx-cloud-a {
+  animation: wx-cloud-a 52s ease-in-out infinite;
+}
+.wx-cloud-b {
+  animation: wx-cloud-b 68s ease-in-out infinite;
+}
+.wx-fog-layer {
+  animation: wx-fog 38s ease-in-out infinite;
+}
+.wx-twinkle {
+  animation: wx-twinkle 3.2s ease-in-out infinite;
+}
+
+@keyframes wx-sun-pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 0.95;
+  }
+  50% {
+    transform: scale(1.04);
+    opacity: 1;
+  }
+}
+.wx-sun-glow {
+  animation: wx-sun-pulse 8s ease-in-out infinite;
+}
