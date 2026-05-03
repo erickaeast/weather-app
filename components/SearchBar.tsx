@@ -1,19 +1,23 @@
 "use client";
 
-import { useCallback, useState } from "react";
+import { useCallback } from "react";
 
 interface SearchBarProps {
+  value: string;
+  onChange: (value: string) => void;
   onSearch: (city: string) => void;
   isLoading: boolean;
 }
 
-export function SearchBar({ onSearch, isLoading }: SearchBarProps) {
-  const [value, setValue] = useState("");
-
+export function SearchBar({
+  value,
+  onChange,
+  onSearch,
+  isLoading,
+}: SearchBarProps) {
   const submit = useCallback(() => {
-    const q = value.trim();
-    if (!q || isLoading) return;
-    onSearch(q);
+    if (isLoading) return;
+    onSearch(value.trim());
   }, [value, isLoading, onSearch]);
 
   return (
@@ -27,7 +31,7 @@ export function SearchBar({ onSearch, isLoading }: SearchBarProps) {
         enterKeyHint="search"
         placeholder="Search city…"
         value={value}
-        onChange={(e) => setValue(e.target.value)}
+        onChange={(e) => onChange(e.target.value)}
         onKeyDown={(e) => {
           if (e.key === "Enter") submit();
         }}
@@ -38,7 +42,7 @@ export function SearchBar({ onSearch, isLoading }: SearchBarProps) {
       <button
         type="button"
         onClick={submit}
-        disabled={isLoading || !value.trim()}
+        disabled={isLoading}
         className="shrink-0 rounded-full bg-white/90 px-5 py-2.5 text-sm font-semibold text-zinc-900 shadow transition-opacity hover:bg-white disabled:cursor-not-allowed disabled:opacity-50 dark:bg-white dark:text-zinc-900"
       >
         {isLoading ? "…" : "Search"}

@@ -27,6 +27,15 @@ export function celsiusToFahrenheit(c: number): number {
 
 export type TemperatureUnit = "C" | "F";
 
+/** Uses OWM unix timestamps (same instant for city). */
+export function isDaytime(
+  nowUnix: number,
+  sunriseUnix: number,
+  sunsetUnix: number,
+): boolean {
+  return nowUnix >= sunriseUnix && nowUnix <= sunsetUnix;
+}
+
 /** Display temperature from stored Celsius; value is rounded for UI. */
 export function formatTemp(celsius: number, unit: TemperatureUnit): string {
   if (unit === "F") {

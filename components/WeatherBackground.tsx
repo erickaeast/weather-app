@@ -9,6 +9,7 @@ import {
 } from "react";
 import {
   canvasParticlesEnabled,
+  getLoadingGradient,
   getSkyGradient,
   getWeatherConditionGroup,
   rainIntensityCap,
@@ -20,6 +21,8 @@ interface WeatherBackgroundProps {
   conditionId: number;
   isDay: boolean;
   theme: "light" | "dark";
+  /** Fetch in progress — neutral drifting gradient, no condition effects. */
+  loading?: boolean;
 }
 
 interface RainDrop {
@@ -82,17 +85,45 @@ export function WeatherBackground({
   conditionId,
   isDay,
   theme,
+  loading = false,
 }: WeatherBackgroundProps) {
   const group = useMemo(
     () => getWeatherConditionGroup(conditionId),
     [conditionId],
   );
-  const gradient = useMemo(
+  const weatherGradient = useMemo(
     () => getSkyGradient(group, isDay, theme),
     [group, isDay, theme],
   );
-  const paletteKey = `${conditionId}-${isDay}-${theme}`;
+  const loadingGradient = useMemo(
+    () => getLoadingGradient(theme),
+    [theme],
+  );
+  const targetGradient = loading ? loadingGradient : weatherGradient;
+
   const reducedMotion = usePrefersReducedMotion();
+  const prevTargetRef = useRef<string | null>(null);
+  const skipCrossfadeRef = useRef(true);
+  const [underlayGradient, setUnderlayGradient] = useState(targetGradient);
+  const [overlayGradient, setOverlayGradient] = useState(targetGradient);
+  const [overlayGeneration, setOverlayGeneration] = useState(0);
+
+  useEffect(() => {
+    if (skipCrossfadeRef.current) {
+      skipCrossfadeRef.current = false;
+      prevTargetRef.current = targetGradient;
+      setUnderlayGradient(targetGradient);
+      setOverlayGradient(targetGradient);
+      return;
+    }
+    if (targetGradient === prevTargetRef.current) return;
+    const prev = prevTargetRef.current ?? targetGradient;
+    prevTargetRef.current = targetGradient;
+    setUnderlayGradient(prev);
+    setOverlayGradient(targetGradient);
+    setOverlayGeneration((g) => g + 1);
+  }, [targetGradient]);
+
   const pageVisible = usePageVisible();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const dropsRef = useRef<RainDrop[]>([]);
@@ -101,6 +132,7 @@ export function WeatherBackground({
   const [lightning, setLightning] = useState(0);
 
   const particlesOn =
+    !loading &&
     !reducedMotion &&
     pageVisible &&
     canvasParticlesEnabled(group);
@@ -108,7 +140,7 @@ export function WeatherBackground({
   const rainMode = group !== "snow";
 
   useEffect(() => {
-    if (group !== "thunder" || reducedMotion) return;
+    if (loading || group !== "thunder" || reducedMotion) return;
     let cancelled = false;
     let timeoutId = 0;
 
@@ -127,7 +159,7 @@ export function WeatherBackground({
       cancelled = true;
       window.clearTimeout(timeoutId);
     };
-  }, [group, reducedMotion]);
+  }, [group, reducedMotion, loading]);
 
   const resizeAndInit = useCallback(() => {
     const canvas = canvasRef.current;
@@ -219,16 +251,20 @@ export function WeatherBackground({
   }, [particlesOn, rainMode]);
 
   const showClouds =
+    !loading &&
     !reducedMotion &&
     (group === "cloudsLight" ||
       group === "cloudsHeavy" ||
       group === "thunder");
 
-  const showFog = !reducedMotion && group === "fog";
+  const showFog = !loading && !reducedMotion && group === "fog";
 
-  const showSun = !reducedMotion && group === "clear" && isDay;
-  const showMoon = !reducedMotion && group === "clear" && !isDay;
-  const showStars = !reducedMotion && group === "clear" && !isDay;
+  const showSun =
+    !loading && !reducedMotion && group === "clear" && isDay;
+  const showMoon =
+    !loading && !reducedMotion && group === "clear" && !isDay;
+  const showStars =
+    !loading && !reducedMotion && group === "clear" && !isDay;
 
   return (
     <div
@@ -236,9 +272,15 @@ export function WeatherBackground({
       aria-hidden
     >
       <div
-        key={paletteKey}
-        className={`absolute inset-0 ${reducedMotion ? "" : "wx-bg-enter"}`}
-        style={{ background: gradient }}
+        className="absolute inset-0 z-0"
+        style={{ background: underlayGradient }}
+      />
+      <div
+        key={overlayGeneration}
+        className={`absolute inset-0 z-[1] ${
+          overlayGeneration === 0 || reducedMotion ? "" : "wx-bg-enter"
+        } ${loading && !reducedMotion ? "wx-loading-drift" : ""}`}
+        style={{ background: overlayGradient }}
       />
 
       {showStars && (
@@ -314,7 +356,7 @@ export function WeatherBackground({
         />
       )}
 
-      {group === "thunder" && lightning > 0 && (
+      {!loading && group === "thunder" && lightning > 0 && (
         <div
           className="absolute inset-0 z-[2] bg-white"
           style={{ opacity: lightning }}
