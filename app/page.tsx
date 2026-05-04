@@ -21,8 +21,15 @@ import {
 const DEFAULT_CITY = "Atlanta";
 const LAST_CITY_KEY = "weather_last_city";
 
-/** Fallback OWM-like icon code when there is no payload yet (neutral clouds). */
+/** Fallback OWM-like icon code when there’s no payload yet (neutral clouds). */
 const FALLBACK_CONDITION_ID = 802;
+
+/** Readable over bright + dark animated backgrounds (Phase 4 contrast). */
+const heroEyebrowClass =
+  "text-[10px] font-semibold uppercase tracking-[0.22em] text-zinc-800 transition-colors duration-300 [text-shadow:0_1px_3px_rgba(255,255,255,0.85)] dark:text-white/55 dark:[text-shadow:0_2px_12px_rgba(0,0,0,0.45)]";
+
+const heroTitleClass =
+  "mt-1 truncate text-3xl font-semibold tracking-tight text-zinc-900 transition-colors duration-300 [text-shadow:0_1px_4px_rgba(255,255,255,0.9)] dark:text-white dark:[text-shadow:0_2px_16px_rgba(0,0,0,0.5)] sm:text-4xl";
 
 export default function Home() {
   const theme = useUiTheme();
@@ -90,13 +97,11 @@ export default function Home() {
         loading={isLoading}
       />
 
-      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col gap-8 px-4 py-6 pb-12 sm:px-6">
+      <div className="relative z-10 mx-auto flex w-full max-w-3xl flex-1 flex-col gap-6 px-4 py-6 pb-12 transition-[gap,padding] duration-300 sm:gap-8 sm:px-6 md:px-8 lg:max-w-4xl">
         <header className="flex flex-wrap items-start justify-between gap-4">
           <div className="min-w-0">
-            <p className="text-[10px] font-semibold uppercase tracking-[0.22em] text-white/55 drop-shadow-sm">
-              Weather
-            </p>
-            <h1 className="mt-1 truncate text-3xl font-semibold tracking-tight text-white drop-shadow-md sm:text-4xl">
+            <p className={heroEyebrowClass}>Weather</p>
+            <h1 className={heroTitleClass}>
               {weatherData?.current.city ??
                 (isLoading ? "…" : error ? "—" : "Weather")}
             </h1>
@@ -107,31 +112,31 @@ export default function Home() {
           </div>
         </header>
 
-        <SearchBar
-          value={query}
-          onChange={(v) => {
-            setQuery(v);
-            if (emptyHint) setEmptyHint(null);
-          }}
-          onSearch={handleSearch}
-          isLoading={isLoading}
-        />
+        <div className="w-full max-w-md">
+          <SearchBar
+            value={query}
+            onChange={(v) => {
+              setQuery(v);
+              if (emptyHint) setEmptyHint(null);
+            }}
+            onSearch={handleSearch}
+            isLoading={isLoading}
+          />
+        </div>
 
         {emptyHint && (
-          <p className="text-center text-sm text-amber-100/95 drop-shadow">
+          <p className="text-center text-sm font-medium text-amber-900 [text-shadow:0_1px_2px_rgba(255,255,255,0.8)] transition-colors duration-300 dark:text-amber-100 dark:[text-shadow:0_2px_8px_rgba(0,0,0,0.4)]">
             {emptyHint}
           </p>
         )}
 
-        <div className="rounded-3xl border border-white/15 bg-black/25 p-6 shadow-xl backdrop-blur-md dark:border-white/10 dark:bg-black/35">
+        <div className="rounded-3xl border border-zinc-200/70 bg-white/70 p-5 text-zinc-900 shadow-[0_4px_32px_rgba(0,0,0,0.08),inset_0_1px_0_rgba(255,255,255,0.5)] ring-1 ring-black/[0.04] backdrop-blur-xl transition-[background-color,border-color,box-shadow,color] duration-300 sm:p-6 md:p-7 dark:border-white/10 dark:bg-black/50 dark:text-white dark:shadow-[0_8px_48px_rgba(0,0,0,0.42)] dark:ring-white/[0.06]">
           {isLoading && <WeatherSkeleton />}
 
-          {!isLoading && error && (
-            <ErrorMessage message={error} />
-          )}
+          {!isLoading && error && <ErrorMessage message={error} />}
 
           {!isLoading && !error && weatherData && (
-            <div className="space-y-10">
+            <div className="space-y-10 md:space-y-12">
               <CurrentWeather data={weatherData.current} unit={unit} />
               <HourlyForecast items={weatherData.hourly} unit={unit} />
               <DailyForecast items={weatherData.daily} unit={unit} />

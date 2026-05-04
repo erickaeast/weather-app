@@ -12,7 +12,7 @@ export function HourlyForecast({ items, unit }: HourlyForecastProps) {
     <section aria-labelledby="hourly-heading">
       <h2
         id="hourly-heading"
-        className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/70"
+        className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500 transition-colors duration-300 dark:text-white/70"
       >
         Hourly
       </h2>
@@ -21,9 +21,9 @@ export function HourlyForecast({ items, unit }: HourlyForecastProps) {
           {items.slice(0, 8).map((item) => (
             <li
               key={item.time}
-              className="flex w-[4.5rem] shrink-0 flex-col items-center gap-2 rounded-2xl border border-white/15 bg-black/25 px-3 py-3 text-center shadow backdrop-blur-md dark:border-white/10 dark:bg-black/35"
+              className="flex w-[4.5rem] shrink-0 flex-col items-center gap-2 rounded-2xl border border-zinc-200/80 bg-white/50 px-3 py-3 text-center shadow-sm backdrop-blur-md transition-colors duration-300 dark:border-white/10 dark:bg-black/35"
             >
-              <span className="text-xs tabular-nums text-white/75">
+              <span className="text-xs tabular-nums text-zinc-600 transition-colors duration-300 dark:text-white/75">
                 {formatTime(item.time)}
               </span>
               <Image
@@ -31,8 +31,10 @@ export function HourlyForecast({ items, unit }: HourlyForecastProps) {
                 alt=""
                 width={40}
                 height={40}
+                loading="lazy"
+                className="contrast-[1.02] transition-[filter,opacity] duration-300 dark:brightness-110"
               />
-              <span className="text-sm font-semibold tabular-nums text-white">
+              <span className="text-sm font-semibold tabular-nums text-zinc-900 transition-colors duration-300 dark:text-white">
                 {formatTemp(item.temp, unit)}
               </span>
             </li>
