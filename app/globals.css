@@ -128,3 +128,16 @@ body {
   background-size: 220% 220%;
   animation: wx-loading-drift 22s ease-in-out infinite alternate;
 }
+
+/* Phase 5: respect prefers-reduced-motion for CSS-driven background motion */
+@media (prefers-reduced-motion: reduce) {
+  .wx-bg-enter,
+  .wx-cloud-a,
+  .wx-cloud-b,
+  .wx-fog-layer,
+  .wx-twinkle,
+  .wx-sun-glow,
+  .wx-loading-drift {
+    animation: none !important;
+  }
+}

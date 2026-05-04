@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WeatherIcon } from "@/components/WeatherIcon";
 import type { HourlyItem } from "@/lib/types/weather";
 import { formatTemp, formatTime, type TemperatureUnit } from "@/lib/weather";
 
@@ -26,12 +26,12 @@ export function HourlyForecast({ items, unit }: HourlyForecastProps) {
               <span className="text-xs tabular-nums text-zinc-600 transition-colors duration-300 dark:text-white/75">
                 {formatTime(item.time)}
               </span>
-              <Image
-                src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
-                alt=""
+              <WeatherIcon
+                iconCode={item.icon}
                 width={40}
                 height={40}
-                loading="lazy"
+                sizes="40px"
+                label={item.description}
                 className="contrast-[1.02] transition-[filter,opacity] duration-300 dark:brightness-110"
               />
               <span className="text-sm font-semibold tabular-nums text-zinc-900 transition-colors duration-300 dark:text-white">

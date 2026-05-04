@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WeatherIcon } from "@/components/WeatherIcon";
 import type { WeatherCurrent } from "@/lib/types/weather";
 import {
   formatTemp,
@@ -12,18 +12,16 @@ interface CurrentWeatherProps {
 }
 
 export function CurrentWeather({ data, unit }: CurrentWeatherProps) {
-  const iconSrc = `https://openweathermap.org/img/wn/${data.icon}@2x.png`;
-
   return (
     <section className="flex flex-col items-center gap-5 text-center sm:flex-row sm:items-start sm:gap-6 sm:text-left">
       <div className="relative h-28 w-28 shrink-0 sm:h-32 sm:w-32">
-        <Image
-          src={iconSrc}
-          alt=""
+        <WeatherIcon
+          iconCode={data.icon}
           width={128}
           height={128}
-          className="h-full w-full object-contain drop-shadow-lg contrast-[1.03] transition-[filter,opacity] duration-300 dark:brightness-110 dark:contrast-105"
+          sizes="(max-width: 640px) 112px, 128px"
           priority
+          className="h-full w-full object-contain drop-shadow-lg contrast-[1.03] transition-[filter,opacity] duration-300 dark:brightness-110 dark:contrast-105"
         />
       </div>
       <div className="min-w-0 flex-1">

@@ -15,6 +15,7 @@ import {
   rainIntensityCap,
 } from "@/lib/weatherBackgroundPalette";
 
+/** Snow particle cap (PRD / Phase 5). Rain caps: drizzle 80, rain/thunder 150. */
 const SNOW_CAP = 80;
 
 interface WeatherBackgroundProps {
@@ -140,7 +141,7 @@ export function WeatherBackground({
   const rainMode = group !== "snow";
 
   useEffect(() => {
-    if (loading || group !== "thunder" || reducedMotion) return;
+    if (loading || group !== "thunder" || reducedMotion || !pageVisible) return;
     let cancelled = false;
     let timeoutId = 0;
 
@@ -159,7 +160,7 @@ export function WeatherBackground({
       cancelled = true;
       window.clearTimeout(timeoutId);
     };
-  }, [group, reducedMotion, loading]);
+  }, [group, reducedMotion, loading, pageVisible]);
 
   const resizeAndInit = useCallback(() => {
     const canvas = canvasRef.current;
@@ -288,7 +289,7 @@ export function WeatherBackground({
           {Array.from({ length: 28 }).map((_, i) => (
             <span
               key={i}
-              className="wx-twinkle absolute rounded-full bg-white"
+              className="wx-twinkle absolute will-change-transform rounded-full bg-white"
               style={{
                 width: 1 + (i % 3),
                 height: 1 + (i % 3),
@@ -304,29 +305,29 @@ export function WeatherBackground({
 
       {showSun && (
         <div
-          className="wx-sun-glow absolute -right-[10%] top-[8%] h-40 w-40 rounded-full bg-amber-300/95 blur-md sm:h-48 sm:w-48"
+          className="wx-sun-glow absolute -right-[10%] top-[8%] h-40 w-40 will-change-transform rounded-full bg-amber-300/95 blur-md sm:h-48 sm:w-48"
           style={{ boxShadow: "0 0 80px 28px rgba(253, 184, 19, 0.55)" }}
         />
       )}
 
       {showMoon && (
-        <div className="absolute left-[18%] top-[12%] h-24 w-24 rounded-full bg-slate-200/90 blur-sm sm:h-28 sm:w-28" />
+        <div className="absolute left-[18%] top-[12%] h-24 w-24 will-change-transform rounded-full bg-slate-200/90 blur-sm sm:h-28 sm:w-28" />
       )}
 
       {showClouds && (
         <>
           <div
-            className={`wx-cloud-a absolute -left-[20%] top-[18%] h-28 w-[55%] rounded-full bg-white/35 blur-2xl ${
+            className={`wx-cloud-a absolute -left-[20%] top-[18%] h-28 w-[55%] will-change-transform rounded-full bg-white/35 blur-2xl ${
               group === "cloudsHeavy" ? "opacity-70" : "opacity-50"
             }`}
           />
           <div
-            className={`wx-cloud-b absolute -right-[25%] top-[30%] h-36 w-[60%] rounded-full bg-slate-300/40 blur-3xl ${
+            className={`wx-cloud-b absolute -right-[25%] top-[30%] h-36 w-[60%] will-change-transform rounded-full bg-slate-300/40 blur-3xl ${
               group === "cloudsHeavy" ? "opacity-65" : "opacity-45"
             }`}
           />
           <div
-            className={`wx-cloud-a absolute left-[5%] top-[42%] h-24 w-[45%] rounded-full bg-white/25 blur-2xl ${
+            className={`wx-cloud-a absolute left-[5%] top-[42%] h-24 w-[45%] will-change-transform rounded-full bg-white/25 blur-2xl ${
               group === "thunder" ? "opacity-55" : "opacity-35"
             }`}
             style={{ animationDuration: "62s" }}
@@ -336,13 +337,13 @@ export function WeatherBackground({
 
       {showFog && (
         <>
-          <div className="wx-fog-layer absolute inset-x-0 top-[20%] h-1/4 bg-gradient-to-b from-slate-200/45 to-transparent blur-3xl dark:from-slate-900/50" />
+          <div className="wx-fog-layer absolute inset-x-0 top-[20%] h-1/4 will-change-transform bg-gradient-to-b from-slate-200/45 to-transparent blur-3xl dark:from-slate-900/50" />
           <div
-            className="wx-fog-layer absolute inset-x-0 top-[35%] h-1/3 bg-gradient-to-b from-slate-100/35 to-transparent blur-3xl dark:from-slate-800/45"
+            className="wx-fog-layer absolute inset-x-0 top-[35%] h-1/3 will-change-transform bg-gradient-to-b from-slate-100/35 to-transparent blur-3xl dark:from-slate-800/45"
             style={{ animationDelay: "-12s" }}
           />
           <div
-            className="wx-fog-layer absolute inset-x-0 bottom-[15%] h-1/4 bg-gradient-to-t from-slate-200/40 to-transparent blur-3xl dark:from-slate-900/45"
+            className="wx-fog-layer absolute inset-x-0 bottom-[15%] h-1/4 will-change-transform bg-gradient-to-t from-slate-200/40 to-transparent blur-3xl dark:from-slate-900/45"
             style={{ animationDelay: "-5s" }}
           />
         </>
