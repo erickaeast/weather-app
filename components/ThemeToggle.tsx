@@ -38,7 +38,7 @@ export function ThemeToggle() {
     <button
       type="button"
       onClick={toggle}
-      className="flex h-9 shrink-0 items-center gap-2 rounded-full border border-zinc-300/70 bg-white/60 px-3 py-1.5 text-sm font-medium text-zinc-900 shadow-sm backdrop-blur-md transition-[background-color,border-color,color] duration-300 hover:bg-white/85 dark:border-white/15 dark:bg-black/40 dark:text-white dark:hover:bg-black/55"
+      className="flex h-9 shrink-0 items-center gap-2 rounded-full border border-zinc-300/70 bg-white/60 px-3 py-1.5 text-sm font-medium text-zinc-900 shadow-sm backdrop-blur-md transition-[background-color,border-color,color] duration-300 hover:bg-white/85 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:border-white/15 dark:bg-black/40 dark:text-white dark:hover:bg-black/55 dark:focus-visible:ring-white/50 dark:focus-visible:ring-offset-zinc-900"
       aria-label={dark ? "Switch to light mode" : "Switch to dark mode"}
     >
       <span className="text-base leading-none" aria-hidden>

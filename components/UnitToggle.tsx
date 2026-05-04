@@ -16,7 +16,7 @@ export function UnitToggle({ value, onChange }: UnitToggleProps) {
     >
       <button
         type="button"
-        className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-[background-color,color] duration-300 ${
+        className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-[background-color,color] duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:focus-visible:ring-white/60 dark:focus-visible:ring-offset-zinc-900 ${
           value === "F"
             ? "bg-zinc-900 text-white shadow-sm dark:bg-white dark:text-zinc-900"
             : "text-zinc-700 hover:bg-zinc-900/5 dark:text-white/90 dark:hover:bg-white/10"
@@ -28,7 +28,7 @@ export function UnitToggle({ value, onChange }: UnitToggleProps) {
       </button>
       <button
         type="button"
-        className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-[background-color,color] duration-300 ${
+        className={`rounded-full px-3 py-1.5 text-xs font-semibold transition-[background-color,color] duration-300 focus:outline-none focus-visible:ring-2 focus-visible:ring-zinc-400 focus-visible:ring-offset-2 dark:focus-visible:ring-white/60 dark:focus-visible:ring-offset-zinc-900 ${
           value === "C"
             ? "bg-zinc-900 text-white shadow-sm dark:bg-white dark:text-zinc-900"
             : "text-zinc-700 hover:bg-zinc-900/5 dark:text-white/90 dark:hover:bg-white/10"

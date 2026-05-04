@@ -1,3 +1,7 @@
+/**
+ * Server-only weather proxy. `OWM_API_KEY` must never be imported into client
+ * components or shared modules used by the browser bundle — keep it in this file only.
+ */
 import { NextResponse } from "next/server";
 import type {
   DailyItem,

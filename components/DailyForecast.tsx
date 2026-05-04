@@ -1,4 +1,4 @@
-import Image from "next/image";
+import { WeatherIcon } from "@/components/WeatherIcon";
 import type { DailyItem } from "@/lib/types/weather";
 import {
   formatTemp,
@@ -55,12 +55,11 @@ export function DailyForecast({ items, unit }: DailyForecastProps) {
                 <span className="w-[5.5rem] shrink-0 text-sm font-medium text-zinc-900 transition-colors duration-300 dark:text-white">
                   {formatWeekdayLabel(item.date)}
                 </span>
-                <Image
-                  src={`https://openweathermap.org/img/wn/${item.icon}@2x.png`}
-                  alt=""
+                <WeatherIcon
+                  iconCode={item.icon}
                   width={36}
                   height={36}
-                  loading="lazy"
+                  sizes="36px"
                   className="shrink-0 contrast-[1.02] transition-[filter,opacity] duration-300 dark:brightness-110"
                 />
                 <span className="min-w-0 flex-1 truncate text-xs capitalize text-zinc-600 transition-colors duration-300 dark:text-white/75 sm:hidden">
