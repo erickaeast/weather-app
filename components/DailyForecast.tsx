@@ -40,7 +40,7 @@ export function DailyForecast({ items, unit }: DailyForecastProps) {
     <section aria-labelledby="daily-heading">
       <h2
         id="daily-heading"
-        className="mb-3 text-xs font-semibold uppercase tracking-wider text-white/70"
+        className="mb-3 text-xs font-semibold uppercase tracking-wider text-zinc-500 transition-colors duration-300 dark:text-white/70"
       >
         7-day outlook
       </h2>
@@ -48,11 +48,11 @@ export function DailyForecast({ items, unit }: DailyForecastProps) {
         {rows.map(({ item, leftPct, widthPct }) => (
           <li
             key={item.date}
-            className="rounded-2xl border border-white/15 bg-black/25 px-4 py-3 shadow backdrop-blur-md dark:border-white/10 dark:bg-black/35"
+            className="rounded-2xl border border-zinc-200/80 bg-white/45 px-4 py-3 shadow-sm backdrop-blur-md transition-colors duration-300 dark:border-white/10 dark:bg-black/35"
           >
             <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:gap-4">
               <div className="flex min-w-0 items-center gap-3 sm:w-[11rem] sm:shrink-0">
-                <span className="w-[5.5rem] shrink-0 text-sm font-medium text-white">
+                <span className="w-[5.5rem] shrink-0 text-sm font-medium text-zinc-900 transition-colors duration-300 dark:text-white">
                   {formatWeekdayLabel(item.date)}
                 </span>
                 <Image
@@ -60,28 +60,29 @@ export function DailyForecast({ items, unit }: DailyForecastProps) {
                   alt=""
                   width={36}
                   height={36}
-                  className="shrink-0"
+                  loading="lazy"
+                  className="shrink-0 contrast-[1.02] transition-[filter,opacity] duration-300 dark:brightness-110"
                 />
-                <span className="min-w-0 flex-1 truncate text-xs capitalize text-white/75 sm:hidden">
+                <span className="min-w-0 flex-1 truncate text-xs capitalize text-zinc-600 transition-colors duration-300 dark:text-white/75 sm:hidden">
                   {item.description}
                 </span>
               </div>
-              <div className="hidden min-w-0 flex-1 truncate text-sm capitalize text-white/80 sm:block sm:max-w-[8rem]">
+              <div className="hidden min-w-0 flex-1 truncate text-sm capitalize text-zinc-600 transition-colors duration-300 dark:text-white/80 sm:block sm:max-w-[8rem]">
                 {item.description}
               </div>
               <div className="flex min-w-0 flex-1 items-center gap-3 sm:max-w-none">
                 <span
-                  className="w-11 shrink-0 text-right text-sm font-medium tabular-nums text-sky-200 dark:text-sky-300"
+                  className="w-11 shrink-0 text-right text-sm font-semibold tabular-nums text-sky-700 transition-colors duration-300 dark:text-sky-300"
                   title="Low"
                 >
                   {formatTemp(item.temp_min, unit)}
                 </span>
                 <div
-                  className="relative h-2 min-w-[4rem] flex-1 rounded-full bg-white/15 ring-1 ring-white/10"
+                  className="relative h-2 min-w-[4rem] flex-1 rounded-full bg-zinc-200/90 ring-1 ring-zinc-300/50 transition-colors duration-300 dark:bg-white/15 dark:ring-white/10"
                   aria-hidden
                 >
                   <div
-                    className="absolute top-0 h-full min-w-[6px] rounded-full bg-gradient-to-r from-sky-400 via-amber-300 to-orange-400 shadow-sm ring-1 ring-white/20"
+                    className="absolute top-0 h-full min-w-[6px] rounded-full bg-gradient-to-r from-sky-500 via-amber-400 to-orange-500 shadow-sm ring-1 ring-white/30 dark:from-sky-400 dark:via-amber-300 dark:to-orange-400 dark:ring-white/20"
                     style={{
                       left: `${leftPct}%`,
                       width: `${widthPct}%`,
@@ -89,7 +90,7 @@ export function DailyForecast({ items, unit }: DailyForecastProps) {
                   />
                 </div>
                 <span
-                  className="w-11 shrink-0 text-left text-sm font-medium tabular-nums text-orange-200 dark:text-orange-300"
+                  className="w-11 shrink-0 text-left text-sm font-semibold tabular-nums text-orange-700 transition-colors duration-300 dark:text-orange-300"
                   title="High"
                 >
                   {formatTemp(item.temp_max, unit)}
