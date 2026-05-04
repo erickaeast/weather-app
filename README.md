@@ -18,8 +18,14 @@ Open [http://localhost:3000](http://localhost:3000) with your browser to see the
 
 ### Weather app configuration
 
-- Add an OpenWeatherMap API key to `.env.local` as `OWM_API_KEY` (see `docs/prd.md`). The key is server-only; do not commit it.
+- Get a free API key from [OpenWeatherMap](https://openweathermap.org/api) and add it to **`.env.local`** as **`OWM_API_KEY`** (server-only; never `NEXT_PUBLIC_`). See `docs/prd.md`. `.env*` is gitignored — do not commit the key.
 - The API returns metric (Celsius) data; the **default temperature display in the UI is Fahrenheit (°F)**, with a client-side toggle to Celsius — see `docs/prd.md` and `docs/tasks.md`.
+
+### Deploying on Vercel
+
+- In the Vercel project → **Settings → Environment Variables**, add **`OWM_API_KEY`** for **Production** (and **Preview** if you want preview deployments to call the weather API).
+- Optionally set **`NEXT_PUBLIC_SITE_URL`** to your production URL (e.g. `https://your-app.vercel.app`) so Open Graph / `metadataBase` resolve correctly.
+- Connect the GitHub repo and deploy from **`main`**; production should run `next build` on each push.
 
 You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
 

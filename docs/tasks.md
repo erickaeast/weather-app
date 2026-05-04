@@ -142,12 +142,12 @@ Cursor should follow tasks sequentially. Always refer to `prd.md` before impleme
 
 ## Phase 6 — Deployment
 
-- [ ] Confirm `.env.local` is in `.gitignore` (never commit the API key)
-- [ ] Add `OWM_API_KEY` as an environment variable in Vercel project settings
-- [ ] Push final code to GitHub main branch
-- [ ] Deploy via Vercel — confirm production build succeeds
-- [ ] Test production URL: search a city, toggle theme, toggle units, test error state
-- [ ] Update `README.md` with setup instructions (env var required, OWM signup link)
+- [x] Confirm `.env.local` is in `.gitignore` (never commit the API key)
+- [x] Add `OWM_API_KEY` as an environment variable in Vercel project settings
+- [x] Push final code to GitHub main branch
+- [x] Deploy via Vercel — confirm production build succeeds
+- [x] Test production URL: search a city, toggle theme, toggle units, test error state
+- [x] Update `README.md` with setup instructions (env var required, OWM signup link)
 
 ---
 
